@@ -1,0 +1,14 @@
+true==function()
+{
+  var MA = function(period, begin){
+    var sum = 0;     
+    var i;
+    for (i = begin; i < period + begin; i++){
+          sum += [ih][i].PClosing;
+    }
+    return sum/period;
+  };
+  (cfield0) = Math.round(MA(26, 0));
+  (cfield1) = Math.round(MA(15, 0));
+  return (cfield1) > (cfield0) &&  Math.round(MA(15, 3)) <  Math.round(MA(26, 3))  ; 
+}()
