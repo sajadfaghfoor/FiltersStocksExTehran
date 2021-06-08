@@ -1,0 +1,41 @@
+true==function()
+//writtenbysfmqrb
+{
+    var MaxPrice=function(period, start){
+        var max = [ih][start].PriceMax;
+        var ipos;
+        for(ipos = start; ipos < start+period; ipos++){
+            if(max < [ih][ipos].PriceMax)
+                max = [ih][ipos].PriceMax;
+        }
+        return max;
+    };
+//writtenbysfmqrb
+    var MinPrice=function(period, start){
+        var min = [ih][0].PriceMin;
+        var ipos;
+        for(ipos = start; ipos < start+period; ipos++){
+            if(min > [ih][ipos].PriceMin)
+              min = [ih][ipos].PriceMin;
+        }
+        return min;
+    };
+
+    var l26NowNow = (MaxPrice(26,0) + MinPrice(26,0)) / 2
+    var l9NowNow = (MaxPrice(9,0) + MinPrice(9,0)) / 2
+
+    var baseDate = 1
+    var l26Now = (MaxPrice(26,baseDate) + MinPrice(26,baseDate)) / 2
+    var l9Now = (MaxPrice(9,baseDate) + MinPrice(9,baseDate)) / 2
+    var l26last = (MaxPrice(26,baseDate+1) + MinPrice(26,baseDate+1)) / 2
+    var l9last = (MaxPrice(9,baseDate+1) + MinPrice(9,baseDate+1)) / 2
+//writtenbysfmqrb
+    var senkoA = ((MaxPrice(26,baseDate + 26) + MinPrice(26,baseDate + 26)) / 2 + (MaxPrice(9,baseDate + 26) + MinPrice(9,baseDate + 26)) / 2) / 2
+
+    if (l9Now > l26Now && l26last > l9last && [ih][0].PriceMax > senkoA && l9Now < l9NowNow && l26Now < l26NowNow){
+        return true
+    }
+    else{
+        return false
+    }
+}()
