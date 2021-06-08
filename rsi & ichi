@@ -1,0 +1,93 @@
+true==function()
+{
+
+
+   var MaxPrice=function(period, start){
+        var max = [ih][start].PriceMax;
+        var ipos;
+        for(ipos = start; ipos < start+period; ipos++){
+            if(max < [ih][ipos].PriceMax)
+                max = [ih][ipos].PriceMax;
+        }
+        return max;
+    };
+//writtenbysfmqrb
+    var MinPrice=function(period, start){
+        var min = [ih][0].PriceMin;
+        var ipos;
+        for(ipos = start; ipos < start+period; ipos++){
+            if(min > [ih][ipos].PriceMin)
+              min = [ih][ipos].PriceMin;
+        }
+        return min;
+    }; 
+    var CalculateRSI = function(period){
+        var len=20;
+        for (var i = 0; i < len; i++) {
+            var rec=[ih][len-1-i];
+            var change = rec.PDrCotVal - [ih][len-i].PDrCotVal;
+            if (change > 0) {
+                rec.gain = change;
+                rec.loss = 0;
+            }
+            else
+            {
+                rec.gain = 0;
+                rec.loss = -change;
+            }
+        }
+
+        // Calculate first "average gain" and "average loss"
+        var gainSum = 0;
+        var lossSum = 0;
+
+        for (var i = 0; i < period; i++) {
+            var rec=[ih][len-1-i];
+            gainSum += rec.gain;
+            lossSum += rec.loss;
+        }
+
+        var averageGain = gainSum / period;
+        var averageLoss = lossSum / period;
+
+        // Calculate subsequent "average gain" and "average loss" values
+        for (var i = period + 1; i < len; i++) {
+            var rec=[ih][len-1-i];
+            averageGain=(averageGain * (period - 1) + rec.gain) / period;
+            averageLoss=(averageLoss * (period - 1) + rec.loss) / period;
+            rec.averageGain=averageGain;
+            rec.averageLoss=averageLoss;
+        }
+
+        // Calculate RSI
+        var RS = 0; // Relative strength
+        var RSIndex = 0; // Relative strength index
+
+        for (var i = period + 1; i < len; i++)
+        {
+            var rec=[ih][len-1-i];
+            RS = rec.averageGain/ rec.averageLoss;
+            RSIndex = 100 - 100 / (1 + RS);
+            rec.rsi=RSIndex;
+        }
+    };
+    CalculateRSI(14);
+
+    var baseDate = 0
+   var r = 5
+var k =10
+   baseRSIcross = 50
+    var l26Now = (MaxPrice(26,baseDate+1) + MinPrice(26,baseDate+1)) / 2
+    var l9Now = (MaxPrice(9,baseDate+1) + MinPrice(9,baseDate+1)) / 2
+    var l26last = (MaxPrice(26,baseDate+k) + MinPrice(26,baseDate+k)) / 2
+    var l9last = (MaxPrice(9,baseDate+k) + MinPrice(9,baseDate+k)) / 2
+//writtenbysfmqrb
+    var senkoA = ((MaxPrice(26,baseDate + 26) + MinPrice(26,baseDate + 26)) / 2 + (MaxPrice(9,baseDate + 26) + MinPrice(9,baseDate + 26)) / 2) / 2 
+ 
+
+    if(  [ih][0].rsi< baseRSIcross + r  &&   [ih][1].rsi> baseRSIcross - r &&l9Now > l26Now && l26last > l9last && [ih][0].PriceMax > senkoA)
+        return true;
+    else
+        return false;
+
+}()
