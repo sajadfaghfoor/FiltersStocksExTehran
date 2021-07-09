@@ -1,0 +1,38 @@
+# صف فروش به صفر
+(tmin) == (pmin) && (plp) > 0
+
+# صف فروش به صف خرید
+(tmin) == (pmin) && (pl) == (tmax)
+
+# جمع شدن صف فروش بعد از دو هفته
+(plp) > 0 &&
+[ih][1].PriceMax == [ih][1].PriceMin &&
+[ih][2].PriceMax == [ih][2].PriceMin &&
+[ih][3].PriceMax == [ih][3].PriceMin &&
+[ih][4].PriceMax == [ih][4].PriceMin &&
+[ih][5].PriceMax == [ih][5].PriceMin &&
+[ih][6].PriceMax == [ih][6].PriceMin &&
+[ih][7].PriceMax == [ih][7].PriceMin &&
+[ih][8].PriceMax == [ih][8].PriceMin &&
+[ih][9].PriceMax == [ih][9].PriceMin &&
+[ih][10].PriceMax == [ih][10].PriceMin &&
+[ih][11].PriceMax == [ih][11].PriceMin &&
+[ih][12].PriceMax == [ih][12].PriceMin &&
+[ih][13].PriceMax == [ih][13].PriceMin &&
+[ih][14].PriceMax == [ih][14].PriceMin 
+
+# سهم سه روز صف خرید و معامله بیشتر از مبنا ولی حدودش باشه
+[ih][0].PriceMax == [ih][0].PClosing  &&
+[ih][1].PriceMax == [ih][1].PClosing &&
+[ih][2].PriceMax == [ih][2].PClosing &&
+(tmax) == (pl) && (bvol) < (tvol) < 2 * (bvol)
+
+
+# صف خرید به صفر
+(tmax) == (pmax) && (plp) < 0
+
+# صف خرید
+(pl) == (tmax)
+
+# صف فروش
+(pl) == (tmin)
